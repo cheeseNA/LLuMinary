@@ -6,14 +6,15 @@ const emit = defineEmits(["response"]);
 const props = defineProps({
     is_typing: Boolean,
     color: String,
+    button_color: String,
 })
 
 </script>
 
 <template>
   <div class="chat-input-container" :style='{backgroundColor: color}'>
-    <input v-model="input" type="text" class="chat-input" placeholder="Type your message...">
-    <button v-on:click="emit('response', input); input=''" class="send-button" :disabled="is_typing">Send</button>
+    <input v-model="input" type="text" class="chat-input" placeholder="Type your message..."  :style="{outlineColor: button_color}">
+    <button v-on:click="emit('response', input); input=''" class="send-button" :disabled="is_typing" :style="{backgroundColor: button_color}">Send</button>
   </div>
 </template>
 

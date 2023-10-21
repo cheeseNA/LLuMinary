@@ -7,6 +7,7 @@ const props = defineProps({
     input_msg: String,
     is_typing: Boolean,
     color: String,
+    button_color: String,
 })
 
 let default_messages = [
@@ -46,7 +47,7 @@ let default_messages = [
                     <font-awesome-icon v-if="msg.role=='assistant'" icon="fa-solid fa-microchip-ai" color="green"/>
                 </div>
                 <div class="message__inner">
-                    <div class="message__bubble">{{ msg.content }}</div>
+                    <div class="message__bubble" :style="msg.role == 'user' ? {backgroundColor: button_color} : {}">{{ msg.content }}</div>
                     <div class="message__spacer"></div>
                 </div>
             </div>
@@ -59,7 +60,7 @@ let default_messages = [
                 <div class="message__avatar">
                 </div>
                 <div class="message__inner">
-                    <div class="message__bubble">{{ input_msg || "BUG: input msg hasn't arrived."}}</div>
+                    <div class="message__bubble" :style="{backgroundColor: button_color}">{{ input_msg || "BUG: input msg hasn't arrived."}}</div>
                     <div class="message__spacer"></div>
                 </div>
             </div>
