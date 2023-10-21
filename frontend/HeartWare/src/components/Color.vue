@@ -54,7 +54,6 @@ watch(color, (c: string) => {
       <div class="button"><span></span></div>
     </label>
   </div>
-  <p>Selected color: {{ color }}</p>
 </template>
 
 <style>
