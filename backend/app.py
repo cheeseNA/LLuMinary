@@ -1,10 +1,9 @@
 import os
-from fastapi import FastAPI, WebSocket, Request
+
+from bot.bot import Bot
+from fastapi import FastAPI, Request, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
-
-from backend.templates import *  # Make sure to import this module if necessary
-from backend.bot.bot import *
 
 templates = Jinja2Templates(directory="templates")
 
@@ -22,7 +21,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 @app.get("/")
 def read_root(request: Request):
@@ -59,6 +57,7 @@ async def websocket_endpoint(websocket: WebSocket):
                     await websocket.send_text(new_resp)
 
 
+
 def chatbot_response(user_input):
     bot = Bot(200)
     response = bot.generate(user_input)
@@ -69,6 +68,7 @@ def chatbot_response(user_input):
 #     response = bot.generate(user_input)
 #     print(response)
 #     return response
+
 
 
 if __name__ == "__main__":
