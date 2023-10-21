@@ -5,8 +5,44 @@ const emit = defineEmits(["response"]);
 </script>
 
 <template>
-  <input v-model="input" type="text" />
-  <button v-on:click="emit('response', input)">Send</button>
+  <div class="chat-input-container">
+    <input v-model="input" type="text" class="chat-input" placeholder="Type your message...">
+    <button v-on:click="emit('response', input)" class="send-button">Send</button>
+  </div>
 </template>
 
-<style></style>
+<style>
+  /* Chat input container */
+  .chat-input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: black;
+    padding: 10px;
+  }
+
+  /* Chat input field */
+  .chat-input {
+    flex: 1;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  /* Send button */
+  .send-button {
+    background-color: teal;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  input {
+    /* outline-color: white;
+    outline-offset: -5px; */
+    outline-color: teal;
+  }
+</style>

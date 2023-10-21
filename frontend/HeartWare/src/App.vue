@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import Handler from './components/Handler.vue';
 import MessageArea from './components/MessageArea.vue';
+import InputArea from './components/InputArea.vue';
 </script>
 
 <template>
 
 <MessageArea />
+<InputArea />
 
 </template>
 
