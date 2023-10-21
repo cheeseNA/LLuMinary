@@ -26,9 +26,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# @app.get("/")
-# def read_root(request: Request):
-#     return templates.TemplateResponse("chat.html", {"request": request})
+@app.get("/")
+def read_root(request: Request):
+    return templates.TemplateResponse("chat.html", {"request": request})
 
 
 @app.websocket("/chat")
@@ -43,17 +43,17 @@ async def websocket_endpoint(websocket: WebSocket):
     while True:
         bot = Bot(200)
         chat = True
-        prev_convo = await websocket.receive_text()
-        print(prev_convo)
+        # prev_convo = await websocket.receive_text()
+        # print(prev_convo)
 
         with bot.model.chat_session(system_prompt='answer in 4 sentences max'):
             # check for previous chat history
-            if prev_convo == "":
-                pass
-            elif len(prev_convo) > 1:
-                prev = ast.literal_eval(prev_convo)
-                if isinstance(prev, list):
-                    bot.model.current_chat_session = prev
+            # if prev_convo == "":
+            #     pass
+            # elif len(prev_convo) > 1:
+            #     prev = ast.literal_eval(prev_convo)
+            #     if isinstance(prev, list):
+            #         bot.model.current_chat_session = prev
 
             while chat:
                 user_message = await websocket.receive_text()
@@ -70,4 +70,4 @@ async def websocket_endpoint(websocket: WebSocket):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=9000)

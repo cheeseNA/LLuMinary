@@ -18,7 +18,7 @@
         const clearButton = document.getElementById("clear-button");
 
         // Update the WebSocket URL to match the new path
-        const socket = new WebSocket("wss://lluminaries.serveo.net/chat");
+        const socket = new WebSocket("ws://0.0.0.0:9000/chat");
 
         socket.onmessage = function (event) {
             const message = document.createElement("p");

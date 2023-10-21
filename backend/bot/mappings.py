@@ -1,4 +1,12 @@
+import json
+import random
+REVIEW_PATH = 'backend/scrape/courses.json'
+
 ABBREV = {
+    ("failed", "messed up"): "consolation",
+    ("learning phase", "exam phase", "studying phase"): "lernphase",
+    ("student life", "vis", "CAB", "polyball", "Bjorn", "Hackathon", "Ueli", "Maurer", "Ueli Maurer", "Katzensee", "diversity", "housing"): "student life",
+
     ("diskmat", "diskrete mathematik", "diskmathe", "diskmath", "diskrete mathe"): "Discrete Mathematics",
     ("linalg", "lineare algebra"): "Linear Algebra",
     ("eprog", "intro to programming", "prog", "programming class"): "Introduction to Programming",
@@ -36,16 +44,10 @@ ABBREV = {
     ("ASL", "systems lab"): "Advanced Systems Lab",
     ("CIL", "comp intelligence lab", "intelligence lab"): "Computational Intelligence Lab",
     ("ISL", "security lab"): "Information Security Lab"
-
-
-
-# Note: ana and analysis are valid names for both Ana1 and Ana2 so it's gonna map to Ana1 by default (subject to change)
-
-
 }
 
 
-def map_course(abbreviation: str) -> str:
+def map_course(abbreviation: str) -> str | None:
     """Maps a student's course abbreviation to the actual course name (e.x. diskmat to Discrete Mathematics).
     Returns None if abbreviation unknown."""
     if abbreviation == "":
@@ -65,3 +67,16 @@ def map_course(abbreviation: str) -> str:
 
     return None
 
+
+def return_review(full_name: str) -> str | None:
+    """
+    Return Review given full name if exists
+    :param full_name:
+    :return:
+    """
+    with open(REVIEW_PATH, 'r') as json_file:
+        data = json.load(json_file)
+        if full_name in data.keys():
+            return random.choice(data[full_name])
+        else:
+            return f'I dont have too much information on {full_name}'

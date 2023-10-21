@@ -1,4 +1,5 @@
 import csv
+import json
 import pprint
 import re
 import time
@@ -6,6 +7,7 @@ from typing import Dict, List, Optional, Set
 from urllib.parse import urljoin
 
 import requests
+import tqdm
 from bs4 import BeautifulSoup
 from requests import Response
 from selenium import webdriver
@@ -83,6 +85,19 @@ class WebScrapper:
         }
         return dicts
 
+    def get_course_reviews(self, course_url: str) -> List[str]:
+        """Returns a list of all the course reviews on the webpage"""
+        self.driver.get(course_url)
+        time.sleep(2)
+        response = self.driver.page_source.encode("utf-8")
+        soup = BeautifulSoup(response, "html.parser")
+
+        div = soup.find("div", id="reviews")
+        # get all paragraphs with box class
+        box = div.find_all("p", class_="box")
+        reviews = [box[i].get_text() for i in range(len(box))]
+        return reviews
+
     def get_links(self) -> Optional[Set[str]]:
         """Return a set of all the links that could be branched into
         from the main link"""
@@ -127,4 +142,10 @@ class WebScrapper:
 
 if __name__ == "__main__":
     webscraper = WebScrapper(URL)
-    pprint.pprint(webscraper.get_course_dict())
+    courses = webscraper.get_course_dict()
+    json.dump(courses, open("courses.json", "w"))
+    # pprint.pprint(webscraper.get_course_reviews('https://n.ethz.ch/~lteufelbe/coursereview/?course=252-3005-00L'))
+    course_reviews = {}
+    for course, url in tqdm.tqdm(courses.items()):
+        course_reviews[course] = webscraper.get_course_reviews(url)
+    json.dump(course_reviews, open("course_reviews.json", "w"))
