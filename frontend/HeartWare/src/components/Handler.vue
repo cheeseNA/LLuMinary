@@ -14,6 +14,7 @@ interface Argument {
   role: string;
   content: string;
 }
+localStorage.clear();
 
 const waiting = ref(true);
 const socket = new WebSocket("wss://lluminaries.serveo.net/chat");
@@ -71,8 +72,9 @@ console.log("This finishes");
 <template>
   <p v-if="waiting">Waiting right now...</p>
   <p v-else>Connection made</p>
-  <MessageArea :messages="indexed_conv" />
-  <InputArea v-on:response="send_to_llm" />
+  <p>{{ conversation }}</p>
+  <!-- <MessageArea :messages="indexed_conv" /> -->
+  <!-- <InputArea v-on:response="send_to_llm" /> -->
   <!-- <ul> -->
   <!--   <li v-for="t in conversation">{{ t }}</li> -->
   <!-- </ul> -->
