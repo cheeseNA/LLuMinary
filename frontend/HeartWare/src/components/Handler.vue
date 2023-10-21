@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import MessageArea from "./MessageArea.vue";
 import InputArea from "./InputArea.vue";
+import Color from "./Color.vue";
 import { ref, watch } from "vue";
 import { useStorage } from "@vueuse/core";
 
@@ -74,12 +75,42 @@ watch(conversation, (conv) => {
   });
 });
 
+const color = ref("#222222");
+const button_color = ref("teal");
+
+const change_color = (color_input: string) => {
+  color.value = color_input;
+  switch (color_input) {
+    case '#490009': // red
+      button_color.value = '#b40000';
+      break;
+    case '#503c00': // orange
+      button_color.value = '#c98300';
+      break;
+    case '#3b531f': // green
+      button_color.value = 'green';
+      break;
+    case '#183D3D': // teal
+      button_color.value = 'teal';
+      break;
+    case '#19376D': // blue
+      button_color.value = '#2222da';
+      break;
+    case '#451952': // purple
+      button_color.value = 'purple';
+      break;
+    default:
+      console.log(`something wrong with color`);
+      button_color.value = 'teal';
+  }
+};
 
 </script>
 
 <template>
-  <MessageArea :messages="indexed_conv" :input_msg="rsp" :is_typing="typing"/>
-  <InputArea v-on:response="send_to_llm" :is_typing="typing"/>
+  <MessageArea :messages="indexed_conv" :input_msg="rsp" :is_typing="typing" :color="color" :button_color="button_color"/>
+  <InputArea v-on:response="send_to_llm" :is_typing="typing" :color="color" :button_color="button_color"/>
+  <Color v-on:color="change_color"/>
 </template>
 
 <style></style>
