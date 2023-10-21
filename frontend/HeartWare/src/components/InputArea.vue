@@ -2,12 +2,17 @@
 import { ref } from 'vue'
 const input = ref("");
 const emit = defineEmits(["response"]);
+
+const props = defineProps({
+    is_typing: Boolean
+})
+
 </script>
 
 <template>
   <div class="chat-input-container">
     <input v-model="input" type="text" class="chat-input" placeholder="Type your message...">
-    <button v-on:click="emit('response', input)" class="send-button">Send</button>
+    <button v-on:click="emit('response', input); input=''" class="send-button" :disabled="is_typing">Send</button>
   </div>
 </template>
 

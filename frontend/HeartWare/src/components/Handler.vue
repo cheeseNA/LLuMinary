@@ -7,26 +7,27 @@ import { useStorage } from "@vueuse/core";
 interface Message {
   id: number;
   role: string;
-  text: string;
+  content: string;
 }
 
 interface Argument {
   role: string;
   content: string;
 }
-localStorage.clear();
 
-const waiting = ref(true);
+const rsp = ref('')
+const typing = ref(false)
+
+localStorage.clear(); //TODO -------------------------------------------------------------------------------------------------------------------------------------------------
+
 const socket = new WebSocket("wss://lluminaries.serveo.net/chat");
 const awaitConnection = (s: WebSocket) => {
   return new Promise((resolve): void => {
     if (s.readyState !== s.OPEN) {
       socket.onopen = (_: any) => {
-        waiting.value = false;
         resolve(null);
       };
     } else {
-      waiting.value = false;
       resolve(null);
     }
   });
@@ -51,33 +52,34 @@ const indexed_conv = ref(Array<Message>());
 socket.onmessage = (e: MessageEvent) => {
   const raw_data = e.data;
   conversation.value = JSON.parse(raw_data);
+  typing.value = false;
 };
 
 const send_to_llm = (text: string) => {
-  socket.send(text);
+  if (text !== '' || typing.value) {
+    socket.send(text);
+    typing.value = true;
+    rsp.value = text;
+  }
 };
 
 watch(conversation, (conv) => {
+  console.log(conv)
   indexed_conv.value = conv.map((item, index): Message => {
     return {
       id: index + 1,
       role: item.role,
-      text: item.content,
+      content: item.content,
     };
   });
 });
-console.log("This finishes");
+
+
 </script>
 
 <template>
-  <p v-if="waiting">Waiting right now...</p>
-  <p v-else>Connection made</p>
-  <p>{{ conversation }}</p>
-  <!-- <MessageArea :messages="indexed_conv" /> -->
-  <!-- <InputArea v-on:response="send_to_llm" /> -->
-  <!-- <ul> -->
-  <!--   <li v-for="t in conversation">{{ t }}</li> -->
-  <!-- </ul> -->
+  <MessageArea :messages="indexed_conv" :input_msg="rsp" :is_typing="typing"/>
+  <InputArea v-on:response="send_to_llm" :is_typing="typing"/>
 </template>
 
 <style></style>
