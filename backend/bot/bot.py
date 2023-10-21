@@ -1,5 +1,6 @@
 from typing import List, Dict
 
+from fastapi import FastAPI, WebSocket, Request
 from gpt4all import GPT4All
 
 
@@ -17,7 +18,17 @@ class Bot:
         # TODO: if the model cannot provide a specific answer redirect
         return self.model.generate(prompt, max_tokens=self.max_tokens)
 
-    def start_chat_session(self) -> None:
+    def filter_response(self, response: str) -> str:
+        """
+        Given a response from the server, check if it:
+        - does not know the answer
+        - sends bad answer
+        :param response:
+        :return: original response if good, filtered and modified after
+        """
+        ...
+
+    def start_chat_session(self, responses: list) -> None:
         chat = True
         with self.model.chat_session():
             # TODO initialize chat session
@@ -27,7 +38,11 @@ class Bot:
                     chat = False
                     print(self.get_chat_session())  # TODO store chat session
                 else:
+                    new_resp = self.generate(new_input)
+                    print(new_resp)
+                    responses.append(new_resp)
                     print(self.generate(new_input))
+
 
     def get_chat_session(self) -> List[Dict[str, str]]:
         """
