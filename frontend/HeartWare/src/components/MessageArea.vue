@@ -66,7 +66,6 @@ const typing_condition = ref(true) // TODO change condition such that this is on
 
 .wrapper {
     padding: 20px;
-    border-radius: 5px;
     background-color: black;
     display: flex;
     flex-direction: column;
