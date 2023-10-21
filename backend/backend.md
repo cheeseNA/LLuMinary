@@ -9,5 +9,5 @@ $ poetry install
 ## Run server
 
 ```bash
-$ poetry run uvicorn app.main:app
+$ poetry run python app.py
 ```
