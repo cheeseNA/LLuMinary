@@ -44,7 +44,6 @@ async def websocket_endpoint(websocket: WebSocket):
         with bot.model.chat_session():
             # TODO initialize chat session
             while chat:
-                # new_input = input('Type something > ')
                 user_message = await websocket.receive_text()
                 print(user_message)
                 user_messages.append(user_message)
@@ -54,24 +53,8 @@ async def websocket_endpoint(websocket: WebSocket):
                     print(bot.get_chat_session())  # TODO store chat session
                 else:
                     new_resp = bot.generate(user_message)
-                    print(new_resp)
-                    # print(bot.generate(new_input))
+                    # send list [{}]
                     await websocket.send_text(new_resp)
-
-
-
-def chatbot_response(user_input):
-    bot = Bot(200)
-    response = bot.generate(user_input)
-    print(response)
-    return response
-
-# def chatbot_response(user_input: str, bot: Bot):
-#     response = bot.generate(user_input)
-#     print(response)
-#     return response
-
-
 
 if __name__ == "__main__":
     import uvicorn

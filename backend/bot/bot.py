@@ -43,7 +43,6 @@ class Bot:
                     responses.append(new_resp)
                     print(self.generate(new_input))
 
-
     def get_chat_session(self) -> List[Dict[str, str]]:
         """
         Return the current chat session of the bot
