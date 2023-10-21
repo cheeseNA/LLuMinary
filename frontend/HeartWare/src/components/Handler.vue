@@ -16,8 +16,10 @@ interface Argument {
   content: string;
 }
 
-const rsp = ref('')
-const typing = ref(false)
+const props = defineProps({ color: String });
+
+const rsp = ref("");
+const typing = ref(false);
 
 localStorage.clear(); //TODO -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -57,7 +59,7 @@ socket.onmessage = (e: MessageEvent) => {
 };
 
 const send_to_llm = (text: string) => {
-  if (text !== '' || typing.value) {
+  if (text !== "" || typing.value) {
     socket.send(text);
     typing.value = true;
     rsp.value = text;
@@ -65,7 +67,7 @@ const send_to_llm = (text: string) => {
 };
 
 watch(conversation, (conv) => {
-  console.log(conv)
+  console.log(conv);
   indexed_conv.value = conv.map((item, index): Message => {
     return {
       id: index + 1,
@@ -75,42 +77,47 @@ watch(conversation, (conv) => {
   });
 });
 
-const color = ref("#222222");
 const button_color = ref("teal");
 
-const change_color = (color_input: string) => {
-  color.value = color_input;
-  switch (color_input) {
-    case '#490009': // red
-      button_color.value = '#b40000';
-      break;
-    case '#503c00': // orange
-      button_color.value = '#c98300';
-      break;
-    case '#3b531f': // green
-      button_color.value = 'green';
-      break;
-    case '#183D3D': // teal
-      button_color.value = 'teal';
-      break;
-    case '#19376D': // blue
-      button_color.value = '#2222da';
-      break;
-    case '#451952': // purple
-      button_color.value = 'purple';
-      break;
-    default:
-      console.log(`something wrong with color`);
-      button_color.value = 'teal';
-  }
-};
-
+// switch (color_input) {
+//   case "#490009": // red
+//     button_color.value = "#b40000";
+//     break;
+//   case "#503c00": // orange
+//     button_color.value = "#c98300";
+//     break;
+//   case "#3b531f": // green
+//     button_color.value = "green";
+//     break;
+//   case "#183D3D": // teal
+//     button_color.value = "teal";
+//     break;
+//   case "#19376D": // blue
+//     button_color.value = "#2222da";
+//     break;
+//   case "#451952": // purple
+//     button_color.value = "purple";
+//     break;
+//   default:
+//     console.log(`something wrong with color`);
+//     button_color.value = "teal";
+// }
 </script>
 
 <template>
-  <MessageArea :messages="indexed_conv" :input_msg="rsp" :is_typing="typing" :color="color" :button_color="button_color"/>
-  <InputArea v-on:response="send_to_llm" :is_typing="typing" :color="color" :button_color="button_color"/>
-  <Color v-on:color="change_color"/>
+  <MessageArea
+    :messages="indexed_conv"
+    :input_msg="rsp"
+    :is_typing="typing"
+    :color="color"
+    :button_color="button_color"
+  />
+  <InputArea
+    v-on:response="send_to_llm"
+    :is_typing="typing"
+    :color="color"
+    :button_color="button_color"
+  />
 </template>
 
 <style></style>

@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import Color from "./Color.vue";
 
-const props = defineProps({
-  color: String,
-});
-
+const emit = defineEmits({ color: String, backgroundColor: String });
 const extended = ref(false);
 const enabled = ref(false);
+const color = ref("blue");
+watch(color, (c) => {
+  emit("color", c);
+});
 </script>
 
 <template>
@@ -21,13 +23,16 @@ const enabled = ref(false);
     :icon="['fas', 'gear']"
     color="color"
   />
-  <div :class="{ sidebar: extended, minimized: !extended }"><p>Aligned</p></div>
+  <div :class="{ sidebar: extended, minimized: !extended }">
+    <Color @color="(c) => (color = c)" />
+  </div>
 </template>
 
 <style>
 .minimized {
   /* width: 0px; */
   opacity: 0%;
+  transition-duration: 0.6s;
 }
 .sidebar {
   display: flex;
