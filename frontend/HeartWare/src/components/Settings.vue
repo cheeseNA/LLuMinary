@@ -1,18 +1,50 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+const props = defineProps({
+  color: String,
+});
+
 const extended = ref(false);
-const
+const enabled = ref(false);
 </script>
 
 <template>
-  <div v-if="extended"></div>
-  <div v-else>
-    <p :class="settings">Placeholder</p>
-  </div>
+  <font-awesome-icon
+    @click="
+      () => {
+        enabled = !enabled;
+        extended = !extended;
+      }
+    "
+    :class="{ settings: true, rotater: enabled }"
+    :icon="['fas', 'gear']"
+    color="color"
+  />
+  <div :class="{ sidebar: extended, minimized: !extended }"><p>Aligned</p></div>
 </template>
 
 <style>
+.minimized {
+  /* width: 0px; */
+  opacity: 0%;
+}
+.sidebar {
+  display: flex;
+  justify-content: center;
+  opacity: 100%;
+  transition-duration: 0.6s;
+}
+
+.rotater {
+  transform: rotate(180deg);
+}
 .settings {
+  opacity: 60%;
+  transition-duration: 0.9s;
+}
+.settings:hover {
+  opacity: 100%;
+  transition-duration: 0.6s;
 }
 </style>
