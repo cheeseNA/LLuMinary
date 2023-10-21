@@ -1,5 +1,5 @@
-<script lang="ts" setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import { ref } from 'vue'
 const input = ref("");
 const emit = defineEmits(["response"]);
 </script>
