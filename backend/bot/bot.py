@@ -1,6 +1,8 @@
 from typing import List, Dict
 from gpt4all import GPT4All
-from backend.bot.context import *
+
+from backend.bot.mappings import map_course, return_review
+from backend.bot.mental_health_support import *
 from backend.bot.BOT_ETH_CONTEXT import prompt_scan
 
 
@@ -31,9 +33,14 @@ class Bot:
                 self.model.generate(f'summarize this: {resp_front} ',
                                     max_tokens=self.max_tokens, modify=True,
                                     original=usr_input, temp=1.0)
+
+                if depression_check(usr_input):
+                    redirect(self)
                 return
         else:
             self.model.generate(usr_input)
+            if depression_check(usr_input):
+                redirect(self)
             return
 
     def get_chat_session(self) -> List[Dict[str, str]]:

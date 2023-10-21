@@ -14,7 +14,7 @@ ABBREV = {
      "diskrete mathe"): "Discrete Mathematics",
     ("linalg", "lineare algebra"): "Linear Algebra",
     ("eprog", "intro to programming", "prog", "programming class"): "Introduction to Programming",
-    ("AnD", "AuD", "Algorithms", "Algorithms and Datastructures",
+    ("AuD", "Algorithms", "Algorithms and Datastructures",
      "Algorithmen und Datenstrukturen"): "Algorithms and Data Structures",
 
     ("AnW", "Algowahr", "Algorithmen und Wahrscheinlichkeit"): "Algorithms and Probability",
