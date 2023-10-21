@@ -136,27 +136,25 @@ CONVERSATION_MODE_PASSIVE_AGGRESSIVE = """You're a pissed-off, bitter older stud
 younger student. He says that:\n"""
 
 
-
 def prompt_scan(prompt: str) -> str:
     """Scans the prompt for keywords, if a special keyword is found, returns a randomly chosen
     prescripted response. Else it returns null in which case you have to make
     bot generate a proper, unscripted response"""
 
     words = prompt.split()
+    print(words)
     for word in words:
         response = decide_response(word)
         if response is not None:
             return response
-
     return None
 
 
-
-
-def decide_response(response_identifier: str):
+def decide_response(response_identifier: str) -> None | str:
     """The response identifier comes from the mappings.map_course function.
     Important! If response is None - generate a proper (unscripted) response"""
     if response_identifier == "consolation":
+        print('hello :D')
         return CONSOLATION_RESPONSE[random.randint(0, len(CONSOLATION_RESPONSE)-1)]
     elif response_identifier == "student life":
         return STUDENT_LIFE_SUMMARIES[random.randint(0, len(STUDENT_LIFE_SUMMARIES) - 1)]
