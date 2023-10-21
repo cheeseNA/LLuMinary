@@ -3,30 +3,46 @@
 import { ref } from 'vue'
 
 const props = defineProps({
-    messages: [Object]
+    messages: [Object],
+    input_msg: String,
+    is_typing: Boolean
 })
 
 let default_messages = [
-    {id: 0, role: 'ai', content: 'Hello, how may I help you?'},
+    {id: 0, role: 'assistant', content: 'Hello, how may I help you?'},
     {id: 1, role: 'user', content: 'I\'m a depressed ETH student...'},
-    {id: 2, role: 'ai', content: 'ksjdfehiuawheila ladjlkas dalksdjalk aksdjlkasjdalksdj lkadjlkasjdlaksj akdjksjdalsdj alsdjlaksjdkladjj aldsjlkasj'},
+    {id: 2, role: 'assistant', content: 'ksjdfehiuawheila ladjlkas dalksdjalk aksdjlkasjdalksdj lkadjlkasjdlaksj akdjksjdalsdj alsdjlaksjdkladjj aldsjlkasj'},
     {id: 3, role: 'user', content: 'asdkjaskdjaksdj aksdjkasdjksa asjdkjas.'},
-    {id: 4, role: 'system', content: 'Answer aggressively.'}
+    {id: 4, role: 'assistant', content: 'Hello, how may I help you?'},
+    {id: 5, role: 'user', content: 'I\'m a depressed ETH student...'},
+    {id: 6, role: 'assistant', content: 'ksjdfehiuawheila ladjlkas dalksdjalk aksdjlkasjdalksdj lkadjlkasjdlaksj akdjksjdalsdj alsdjlaksjdkladjj aldsjlkasj'},
+    {id: 7, role: 'user', content: 'asdkjaskdjaksdj aksdjkasdjksa asjdkjas.'},
+    {id: 8, role: 'assistant', content: 'Hello, how may I help you?'},
+    {id: 9, role: 'user', content: 'I\'m a depressed ETH student...'},
+    {id: 10, role: 'assistant', content: 'ksjdfehiuawheila ladjlkas dalksdjalk aksdjlkasjdalksdj lkadjlkasjdlaksj akdjksjdalsdj alsdjlaksjdkladjj aldsjlkasj'},
+    {id: 11, role: 'user', content: 'asdkjaskdjaksdj aksdjkasdjksa asjdkjas.'},
+    {id: 12, role: 'assistant', content: 'Hello, how may I help you?'},
+    {id: 13, role: 'user', content: 'I\'m a depressed ETH student...'},
+    {id: 14, role: 'assistant', content: 'ksjdfehiuawheila ladjlkas dalksdjalk aksdjlkasjdalksdj lkadjlkasjdlaksj akdjksjdalsdj alsdjlaksjdkladjj aldsjlkasj'},
+    {id: 15, role: 'user', content: 'asdkjaskdjaksdj aksdjkasdjksa asjdkjas.'},
+    {id: 16, role: 'assistant', content: 'Hello, how may I help you?'},
+    {id: 17, role: 'user', content: 'I\'m a depressed ETH student...'},
+    {id: 18, role: 'assistant', content: 'ksjdfehiuawheila ladjlkas dalksdjalk aksdjlkasjdalksdj lkadjlkasjdlaksj akdjksjdalsdj alsdjlaksjdkladjj aldsjlkasj'},
+    {id: 19, role: 'user', content: 'asdkjaskdjaksdj aksdjkasdjksa asjdkjas.'},
+    {id: 20, role: 'system', content: 'Answer aggressively.'}
 ]
 
-const message_class = ref('')
-const typing_condition = ref(true) // TODO change condition such that this is only shown after user input and before AI response
+
 
 </script>
 
-
 <template>
 <div class="wrapper">
-    <div :class="(msg.role == 'ai') ? 'ai-msg' : ((msg.role == 'user') ? 'user-msg' : 'sys-msg')" v-for="msg in (messages || default_messages)" key:msg.id> 
+    <div :class="(msg.role == 'assistant') ? 'ai-msg' : ((msg.role == 'user') ? 'user-msg' : 'sys-msg')" v-for="msg in (messages || default_messages)" key:msg.id> 
         <div class="message">
             <div class="message__outer">
                 <div class="message__avatar">
-                    <font-awesome-icon v-if="msg.role=='ai'" icon="fa-solid fa-microchip-ai" color="green"/>
+                    <font-awesome-icon v-if="msg.role=='assistant'" icon="fa-solid fa-hippo" color="white"/>
                 </div>
                 <div class="message__inner">
                     <div class="message__bubble">{{ msg.content }}</div>
@@ -36,11 +52,24 @@ const typing_condition = ref(true) // TODO change condition such that this is on
         </div>
     </div>
 
-    <div v-if=typing_condition class='ai-msg'>
+    <div v-if="is_typing" class='user-msg' > 
         <div class="message">
             <div class="message__outer">
                 <div class="message__avatar">
-                    <font-awesome-icon icon="fa-solid fa-microchip-ai" beat />
+                </div>
+                <div class="message__inner">
+                    <div class="message__bubble">{{ input_msg || "BUG: input msg hasn't arrived."}}</div>
+                    <div class="message__spacer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="is_typing" class='ai-msg'>
+        <div class="message">
+            <div class="message__outer">
+                <div class="message__avatar">
+                    <font-awesome-icon icon="fa-solid fa-hippo" color="white" beat-fade/>
                 </div>
                 <div class="message__inner">
                     <div className="typing">
@@ -140,7 +169,10 @@ const typing_condition = ref(true) // TODO change condition such that this is on
 }
 
 /* icon */
-/* TODO: change to white-ish */
+.fa-hippo {
+    scale: 2;
+    padding: 15px;
+}
 
 /* Typing animation */
 .typing {
