@@ -4,6 +4,7 @@ THRESHOLD = 10
 HARD_CODED = {'Numerical Methods for Computer Science': 'its a hard course, but \n'}
 EVENTS = {''}
 KEYWORDS = {'ETH Zurich': 5, 'with': 1, 'course': 2, 'how': 1, 'Zurich': 4, 'prof': 2}
+STUDENT_LIFE = {'life', 'student', 'events', 'clubs', 'lernphase'}
 
 
 def check_input(usr_input: str) -> bool:
