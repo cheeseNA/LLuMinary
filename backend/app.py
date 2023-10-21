@@ -1,4 +1,5 @@
 import os
+import json
 
 from bot.bot import Bot
 from fastapi import FastAPI, Request, WebSocket
@@ -24,24 +25,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def read_root(request: Request):
-    return templates.TemplateResponse("chat.html", {"request": request})
+# @app.get("/")
+# def read_root(request: Request):
+#     return templates.TemplateResponse("chat.html", {"request": request})
 
 
 @app.websocket("/chat")
 async def websocket_endpoint(websocket: WebSocket):
+    print('ATTEMPTING TO CONNECT')
     await websocket.accept()
+    print('CONNECTION ACCEPTED')
+    # prev_convo = [
+    #     {'role': 'user', 'content': 'my name is Robert'},
+    #     {'role': 'assistant', 'content': 'Hello, my name is AI. How can I assist you today?'}]
+
     while True:
-        # user_message = await websocket.receive_text()
-        # print(user_message)
-        # user_messages.append(user_message)
-
-        # response = chatbot_response(user_message)
-
         bot = Bot(200)
         chat = True
-        with bot.model.chat_session():
+        with bot.model.chat_session(system_prompt='answer in 4 sentences max'):
+            # if prev_convo:
+            #     # print('yes')
+            #     bot.model.current_chat_session = prev_convo
             # TODO initialize chat session
             while chat:
                 user_message = await websocket.receive_text()
@@ -53,8 +57,10 @@ async def websocket_endpoint(websocket: WebSocket):
                     print(bot.get_chat_session())  # TODO store chat session
                 else:
                     new_resp = bot.respond(user_message)
+                    print(bot.get_chat_session())
                     # send list [{}]
-                    await websocket.send_text(new_resp)
+
+                    await websocket.send_text(json.dumps(bot.get_chat_session()))
 
 if __name__ == "__main__":
     import uvicorn
