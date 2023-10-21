@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -9,20 +10,24 @@ let default_messages = [
     {id: 0, role: 'ai', content: 'Hello, how may I help you?'},
     {id: 1, role: 'user', content: 'I\'m a depressed ETH student...'},
     {id: 2, role: 'ai', content: 'ksjdfehiuawheila ladjlkas dalksdjalk aksdjlkasjdalksdj lkadjlkasjdlaksj akdjksjdalsdj alsdjlaksjdkladjj aldsjlkasj'},
-    {id: 3, role: 'user', content: 'asdkjaskdjaksdj aksdjkasdjksa asjdkjas.'}
+    {id: 3, role: 'user', content: 'asdkjaskdjaksdj aksdjkasdjksa asjdkjas.'},
+    {id: 4, role: 'system', content: 'Answer aggressively.'}
 ]
 
 const message_class = ref('')
+const typing_condition = ref(true) // TODO change condition such that this is only shown after user input and before AI response
 
 </script>
 
 
 <template>
 <div class="wrapper">
-    <div :class="(msg.role == 'ai') ? 'ai-msg' : 'user-msg'" v-for="msg in (messages || default_messages)" key:msg.id> 
+    <div :class="(msg.role == 'ai') ? 'ai-msg' : ((msg.role == 'user') ? 'user-msg' : 'sys-msg')" v-for="msg in (messages || default_messages)" key:msg.id> 
         <div class="message">
             <div class="message__outer">
-                <div class="message__avatar"></div>
+                <div class="message__avatar">
+                    <font-awesome-icon v-if="msg.role=='ai'" icon="fa-solid fa-microchip-ai" color="green"/>
+                </div>
                 <div class="message__inner">
                     <div class="message__bubble">{{ msg.content }}</div>
                     <div class="message__spacer"></div>
@@ -30,6 +35,25 @@ const message_class = ref('')
             </div>
         </div>
     </div>
+
+    <div v-if=typing_condition class='ai-msg'>
+        <div class="message">
+            <div class="message__outer">
+                <div class="message__avatar">
+                    <font-awesome-icon icon="fa-solid fa-microchip-ai" beat />
+                </div>
+                <div class="message__inner">
+                    <div className="typing">
+                        <div className="typing__dot"></div>
+                        <div className="typing__dot"></div>
+                        <div className="typing__dot"></div>
+                    </div>
+                    <div class="message__spacer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>
 
 
@@ -41,13 +65,15 @@ const message_class = ref('')
 <style>
 
 .wrapper {
-    padding: 10px;
+    padding: 20px;
     border-radius: 5px;
     background-color: black;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
 }
+
+/* messages */
 
 .ai-msg {
     .message__outer {
@@ -60,17 +86,21 @@ const message_class = ref('')
         flex-direction: row;
     }
 
+    .message__avatar {
+        flex-grow: 10px;
+        /* doesn't work */
+    }
+
     .message__bubble {
         max-width: calc(100% - 67px);
         overflow-wrap: break-word;
-        padding: 5px;
-        background-color: lightgray;
+        padding: 5px 10px 5px 10px;
+        background-color: #e6e6e6;
         color: black;
         text-wrap: wrap;
         overflow-wrap: break-word;
         hyphens: auto;
-        border: solid darkgray 1px;
-        border-radius: 5px;
+        border-radius: 20px;
     }
 
     .message__spacer {
@@ -92,18 +122,70 @@ const message_class = ref('')
     .message__bubble {
         max-width: calc(100% - 67px);
         overflow-wrap: break-word;
-        padding: 5px;
+        padding: 5px 10px 5px 10px;
         background-color: teal;
         color: whitesmoke;
         text-wrap: wrap;
         overflow-wrap: break-word;
         hyphens: auto;
-        border: solid darkslategray 1px;
-        border-radius: 5px;
+        border-radius: 20px;
     }
 
     .message__spacer {
         flex-grow: 1;
     }
+}
+
+.sys-msg {
+    display: none;
+}
+
+/* icon */
+/* TODO: change to white-ish */
+
+/* Typing animation */
+.typing {
+  width: 5em;
+  height: 2em;
+  position: relative;
+  padding: 10px;
+  margin-left: 5px;
+  background: #e6e6e6;
+  border-radius: 20px;
+}
+
+.typing__dot {
+  float: left;
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  background: #8d8c91;
+  border-radius: 50%;
+  opacity: 0;
+  animation: loadingFade 1s infinite;
+}
+
+.typing__dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.typing__dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing__dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes loadingFade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 </style>
