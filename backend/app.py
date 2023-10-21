@@ -11,6 +11,8 @@ app = FastAPI()
 user_messages = []
 
 origins = [
+    "*",
+    "http://localhost:3000",
     "https://lluminaries.serveo.net",
 ]
 
