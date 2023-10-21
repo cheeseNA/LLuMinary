@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import Handler from './components/Handler.vue';
-import MessageArea from './components/MessageArea.vue';
 import InputArea from './components/InputArea.vue';
+import MessageArea from './components/MessageArea.vue';
 </script>
 
 <template>
 
-<MessageArea />
-<InputArea />
+<Suspense>
+  <Handler />
+  <template #fallback>
+    Establishing websocket connection...
+  </template>
+</Suspense>
+
+<!-- <MessageArea />
+<InputArea /> -->
 
 </template>
 
