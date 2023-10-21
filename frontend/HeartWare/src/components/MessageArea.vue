@@ -9,7 +9,7 @@ const newMessage = ref('')
 function addMessage() {
     console.log('added message')
     sendMsgToAI()
-    messages.value.push({id: id++, role: 'user', text: newMessage.value })
+    messages.value.push({ id: id++, role: 'user', text: newMessage.value })
     newMessage.value = ''
     fetchAIresponse()
 }
@@ -28,12 +28,12 @@ function fetchAIresponse() {
 
 <template>
 
-<div class="wrapper">
-    <form @submit.prevent="addMessage">
-        <input v-model="newMessage">
-        <button>Send</button>    
-    </form>
+<form @submit.prevent="addMessage">
+    <input v-model="newMessage">
+    <button>Send</button>    
+</form>
 
+<div class="wrapper">
     <ul>
         <li v-for="msg in messages" :key="msg.id">
             {{ msg.text }}
