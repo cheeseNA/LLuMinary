@@ -1,39 +1,52 @@
 <script setup>
-import {ref} from 'vue';
+import {ref} from 'vue'
+
+let id = 0
+
+const messages = ref([{id: id++, role: 'ai', text: 'Hey, how can I help you?'}])
+const newMessage = ref('')
+
+function addMessage() {
+    console.log('added message')
+    sendMsgToAI()
+    messages.value.push({id: id++, role: 'user', text: newMessage.value })
+    newMessage.value = ''
+    fetchAIresponse()
+}
+
+function sendMsgToAI() {
+    // TODO
+}
+
+function fetchAIresponse() {
+    // TODO
+}
+
+
 </script>
 
 
 <template>
 
-<!-- <div class="wrapper">
-    
-</div> -->
+<div class="wrapper">
+    <form @submit.prevent="addMessage">
+        <input v-model="newMessage">
+        <button>Send</button>    
+    </form>
 
-<div class="d-flex justify-content-center">
-  <div class="container container-child">
-    <div class="card">
-      <div class="card-body">
-        <div class="text-left"><span class="badge badge-pill badge-secondary" title="2020-01-01 09:00:00">Hello</span></div>
-        <div class="text-right"><span class="badge badge-pill badge-primary" title="2020-01-01 09:00:00">World</span></div>
-      </div>
-      <div class="card-footer">
-        <div class="input-group input-group-sm">
-          <input type="text" class="form-control" placeholder="Your message..." autofocus />
-          <div class="input-group-append">
-            <button type="button" class="btn btn-primary"><i class="fa fa-paper-plane-o fa-fw"></i><span class="d-none d-sm-inline"> Send</span></button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    <ul>
+        <li v-for="msg in messages" :key="msg.id">
+            {{ msg.text }}
+        </li>
+    </ul>
 </div>
 
 </template>
 
 
 <style>
-/* .wrapper {
-    display: grid;
+.wrapper {
+    /* display: grid; */
 }
 
 .ai-msg {
@@ -41,22 +54,6 @@ import {ref} from 'vue';
 }
 
 .user-msg {
-
-} */
-
-.d-flex {
-    height: 100%;
-  }
-
-  .card {
-    height: 100%;
-  }
-
-  .card-body {
-    overflow-y: auto;
-  }
-
-  .badge {
-    font-weight: 400;
-  }
+    
+}
 </style>
