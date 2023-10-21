@@ -1,4 +1,4 @@
-MAPPINGS = {
+ABBREV = {
     ("diskmat", "diskrete mathematik", "diskmathe", "diskmath", "diskrete mathe"): "Discrete Mathematics",
     ("linalg", "lineare algebra"): "Linear Algebra",
     ("eprog", "intro to programming", "prog", "programming class"): "Introduction to Programming",
@@ -11,7 +11,7 @@ MAPPINGS = {
     ("DDCA", "digital design", "computer architecture", "labs", "FPGAs", "FPGA"): "Digital Design and Computer Architecture",
 
 
-    ("NumCS", "numerics", "numerical methods", "NumCSE"): "Numerical Methods for Computer Science",
+    ("numcs", "NumCS", "numerics", "numerical methods", "NumCSE"): "Numerical Methods for Computer Science",
     ("ana", "ana2", "analysis", "analysis II"): "Analysis 2",
     ("SPCA", "systems programming"): "Systems Programming and Computer Architecture",
     ("TI", "Theoretische Informatik", "TheoInf", "Theoretische Inf"): "Theoretical Computer Science",
@@ -45,7 +45,6 @@ MAPPINGS = {
 }
 
 
-
 def map_course(abbreviation: str) -> str:
     """Maps a student's course abbreviation to the actual course name (e.x. diskmat to Discrete Mathematics).
     Returns None if abbreviation unknown."""
@@ -55,14 +54,14 @@ def map_course(abbreviation: str) -> str:
         return "Algorithms and Data Structures"
     abbreviation = abbreviation.lower()
 
-    for value in MAPPINGS.values():
+    for value in ABBREV.values():
         if value.lower() == abbreviation:
             return value        # perfect match
 
-    for key in MAPPINGS.keys():
+    for key in ABBREV.keys():
         for keyword in key:
             if keyword.lower() == abbreviation:
-                return MAPPINGS[key]
+                return ABBREV[key]
 
     return None
 
