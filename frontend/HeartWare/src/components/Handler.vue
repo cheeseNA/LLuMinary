@@ -1,29 +1,30 @@
 <script setup lang="ts">
-import MessageArea from './MessageArea.vue';
+import MessageArea from "./MessageArea.vue";
+import InputArea from "./InputArea.vue";
+import { ref } from "vue";
+import { useStorage } from "@vueuse/core";
 
-let id = 0
-
-const messages = ref([{id: id++, role: 'ai', text: 'Hey, how can I help you?'}])
-const newMessage = ref('')
-
-function addMessage() {
-    console.log('added message')
-    sendMsgToAI()
-    messages.value.push({ id: id++, role: 'user', text: newMessage.value })
-    newMessage.value = ''
-    fetchAIresponse()
+interface Message {
+  id: number;
+  role: string;
+  text: string;
 }
-function sendMsgToAI() {
-    // TODO
+localStorage.clear();
+if (localStorage.getItem("conversation") === null) {
+  localStorage.setItem("conversation", "[]");
 }
-
-function fetchAIresponse() {
-    // TODO
-}
+const conversation = useStorage("conversation", Array<Message>(), localStorage);
+conversation.value.push({ id: 1, role: "user", text: "hello" });
+conversation.value.forEach((item, index) => {
+  item.id = index + 1;
+});
 </script>
 
 <template>
-    <MessageArea />
+  <p>{{ conversation }}</p>
+  <!-- <ul> -->
+  <!--   <li v-for="t in conversation">{{ t }}</li> -->
+  <!-- </ul> -->
 </template>
 
 <style></style>
