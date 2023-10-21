@@ -52,7 +52,7 @@ async def websocket_endpoint(websocket: WebSocket):
                     chat = False
                     print(bot.get_chat_session())  # TODO store chat session
                 else:
-                    new_resp = bot.generate(user_message)
+                    new_resp = bot.respond(user_message)
                     # send list [{}]
                     await websocket.send_text(new_resp)
 
