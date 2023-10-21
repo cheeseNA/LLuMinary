@@ -35,8 +35,10 @@ class Bot:
         :return: original response if good, filtered and modified after
         """
         scanned_res = prompt_scan(usr_input)
-
+        print('HEYEHEYEHEHE', scanned_res)
         if scanned_res is not None:
+            self.model.current_chat_session.append({'role': 'user', 'content': usr_input})
+            self.model.current_chat_session.append({'role': 'assistant', 'content': scanned_res})
             return scanned_res
         else:
             return self.model.generate(usr_input)
