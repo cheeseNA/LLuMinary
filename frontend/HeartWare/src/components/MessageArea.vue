@@ -5,7 +5,8 @@ import { ref } from 'vue'
 const props = defineProps({
     messages: [Object],
     input_msg: String,
-    is_typing: Boolean
+    is_typing: Boolean,
+    color: String,
 })
 
 let default_messages = [
@@ -37,7 +38,7 @@ let default_messages = [
 </script>
 
 <template>
-<div class="wrapper">
+<div class="wrapper" :style="{backgroundColor: color}">
     <div :class="(msg.role == 'assistant') ? 'ai-msg' : ((msg.role == 'user') ? 'user-msg' : 'sys-msg')" v-for="msg in (messages || default_messages)" key:msg.id> 
         <div class="message">
             <div class="message__outer">

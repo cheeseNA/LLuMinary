@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import MessageArea from "./MessageArea.vue";
 import InputArea from "./InputArea.vue";
+import Color from "./Color.vue";
 import { ref, watch } from "vue";
 import { useStorage } from "@vueuse/core";
 
@@ -74,12 +75,18 @@ watch(conversation, (conv) => {
   });
 });
 
+const color = ref("#222222");
+
+const change_color = (color_input: string) => {
+  color.value = color_input;
+};
 
 </script>
 
 <template>
-  <MessageArea :messages="indexed_conv" :input_msg="rsp" :is_typing="typing"/>
-  <InputArea v-on:response="send_to_llm" :is_typing="typing"/>
+  <MessageArea :messages="indexed_conv" :input_msg="rsp" :is_typing="typing" :color="color"/>
+  <InputArea v-on:response="send_to_llm" :is_typing="typing" :color="color"/>
+  <Color v-on:color="change_color"/>
 </template>
 
 <style></style>

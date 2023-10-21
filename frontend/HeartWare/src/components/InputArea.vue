@@ -4,13 +4,14 @@ const input = ref("");
 const emit = defineEmits(["response"]);
 
 const props = defineProps({
-    is_typing: Boolean
+    is_typing: Boolean,
+    color: String,
 })
 
 </script>
 
 <template>
-  <div class="chat-input-container">
+  <div class="chat-input-container" :style='{backgroundColor: color}'>
     <input v-model="input" type="text" class="chat-input" placeholder="Type your message...">
     <button v-on:click="emit('response', input); input=''" class="send-button" :disabled="is_typing">Send</button>
   </div>
