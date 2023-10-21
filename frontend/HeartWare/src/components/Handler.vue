@@ -15,7 +15,23 @@ interface Argument {
   content: string;
 }
 
+const waiting = ref(true);
 const socket = new WebSocket("wss://lluminaries.serveo.net/chat");
+const awaitConnection = (s: WebSocket) => {
+  return new Promise((resolve): void => {
+    if (s.readyState !== s.OPEN) {
+      socket.onopen = (_: any) => {
+        waiting.value = false;
+        resolve(null);
+      };
+    } else {
+      waiting.value = false;
+      resolve(null);
+    }
+  });
+};
+await awaitConnection(socket);
+
 const tmp = localStorage.getItem("conversation");
 if (tmp === null) {
   socket.send("");
@@ -49,9 +65,12 @@ watch(conversation, (conv) => {
     };
   });
 });
+console.log("This finishes");
 </script>
 
 <template>
+  <p v-if="waiting">Waiting right now...</p>
+  <p v-else>Connection made</p>
   <MessageArea :messages="indexed_conv" />
   <InputArea v-on:response="send_to_llm" />
   <!-- <ul> -->
