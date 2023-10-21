@@ -1,30 +1,6 @@
 from typing import List, Dict
-
-from fastapi import FastAPI, WebSocket, Request
 from gpt4all import GPT4All
-
-THRESHOLD = 10
-ABBREV = {'numcs': 'Numerical Methods for Computer Science'}
-HARD_CODED = {'Numerical Methods for Computer Science': 'its a hard course, but \n'}
-
-
-def check_input(usr_input: str) -> bool:
-    """
-    Given some input, check if its ETH specific related
-    :param usr_input: str
-    :return: bool: representing if ETH related
-    """
-    words = {'ETH', 'with', 'course', 'how'}
-    score = 0
-    for word in words:
-        if word in usr_input:
-            score += 1
-    for abbrev in ABBREV.keys():
-        if abbrev in usr_input:
-            score += THRESHOLD
-    print(score)
-    return score > THRESHOLD
-
+from backend.bot.context import *
 
 class Bot:
     def __init__(self, max_tokens=0) -> None:
@@ -48,19 +24,22 @@ class Bot:
         """
         if check_input(usr_input):
             context = None
-            for course in ABBREV.keys():
-                if course in usr_input:
-                    context = ABBREV[course]
-                    print('context', course)
+            inputs = usr_input.split()
+            print('inputs', inputs)
+            for u_in in inputs:
+                print(u_in)
+                context = map_course(u_in)
 
             if context is not None:
+                print('ctx', context)
                 h_rsp = HARD_CODED[context]
                 bot_resp = self.model.generate(f'Give me hints on {context}')  # TODO change prompt or dict
                 rsp = h_rsp + bot_resp # TODO modify convo history
+
             else:
                 rsp = 'Im sorry I cannot help you with that, please visit ethz.ch' # TODO give better hint
         else:
-            rsp = self.model.generate(usr_input)
+            rsp = self.model.generate(usr_input, temp=5)
 
         return rsp
 
