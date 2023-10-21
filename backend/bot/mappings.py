@@ -1,4 +1,10 @@
+
+
 ABBREV = {
+    ("failed", "messed up"): "consolation",
+    ("learning phase", "exam phase", "studying phase"): "lernphase",
+    ("student life", "vis", "CAB", "polyball", "Bjorn", "Hackathon", "Ueli", "Maurer", "Ueli Maurer", "Katzensee", "diversity", "housing"): "student life",
+
     ("diskmat", "diskrete mathematik", "diskmathe", "diskmath", "diskrete mathe"): "Discrete Mathematics",
     ("linalg", "lineare algebra"): "Linear Algebra",
     ("eprog", "intro to programming", "prog", "programming class"): "Introduction to Programming",

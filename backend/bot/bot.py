@@ -2,6 +2,7 @@ from typing import List, Dict
 from gpt4all import GPT4All
 from backend.bot.context import *
 
+
 class Bot:
     def __init__(self, max_tokens=0) -> None:
         self.max_tokens = max_tokens
@@ -22,26 +23,7 @@ class Bot:
         :param usr_input:
         :return: original response if good, filtered and modified after
         """
-        if check_input(usr_input):
-            context = None
-            inputs = usr_input.split()
-            print('inputs', inputs)
-            for u_in in inputs:
-                print(u_in)
-                context = map_course(u_in)
-
-            if context is not None:
-                print('ctx', context)
-                h_rsp = HARD_CODED[context]
-                bot_resp = self.model.generate(f'Give me hints on {context}')  # TODO change prompt or dict
-                rsp = h_rsp + bot_resp # TODO modify convo history
-
-            else:
-                rsp = 'Im sorry I cannot help you with that, please visit ethz.ch' # TODO give better hint
-        else:
-            rsp = self.model.generate(usr_input, temp=5)
-
-        return rsp
+        return self.model.generate(usr_input)
 
     def start_chat_session(self, responses: list) -> None:
         chat = True
