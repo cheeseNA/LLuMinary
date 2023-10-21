@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat App</title>
+</head>
+<body>
+    <h1>Chat</h1>
+    <div id="chat-box">
+        <!-- User messages and chat history will be displayed here -->
+    </div>
+    <input id="user-message" type="text" placeholder="Type your message">
+    <button id="send-button">Send</button>
+    <button id="clear-button">Clear Chat</button>
+    <script>
+        const chatBox = document.getElementById("chat-box");
+        const userMessageInput = document.getElementById("user-message");
+        const sendButton = document.getElementById("send-button");
+        const clearButton = document.getElementById("clear-button");
+
+        // Update the WebSocket URL to match the new path
+        const socket = new WebSocket("wss://lluminaries.serveo.net/chat");
+
+        socket.onmessage = function (event) {
+            const message = document.createElement("p");
+            message.textContent = event.data;
+            chatBox.appendChild(message);
+        };
+
+        sendButton.addEventListener("click", function () {
+            sendMessage();
+        });
+
+        userMessageInput.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+
+        clearButton.addEventListener("click", function () {
+            chatBox.innerHTML = '';
+        });
+
+        function sendMessage() {
+            const userMessage = userMessageInput.value;
+            if (userMessage.trim() !== "") {
+                socket.send(userMessage);
+                userMessageInput.value = "";
+            }
+        }
+    </script>
+</body>
+</html>
