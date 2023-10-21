@@ -2,13 +2,17 @@
 import { ref } from "vue";
 
 const extended = ref(false);
+const
 </script>
 
 <template>
   <div v-if="extended"></div>
   <div v-else>
-    <font-awesome-icon :icon="['fas', 'gear']" />
+    <p :class="settings">Placeholder</p>
   </div>
 </template>
 
-<style></style>
+<style>
+.settings {
+}
+</style>
