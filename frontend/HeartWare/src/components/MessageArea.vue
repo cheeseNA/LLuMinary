@@ -42,7 +42,7 @@ let default_messages = [
         <div class="message">
             <div class="message__outer">
                 <div class="message__avatar">
-                    <font-awesome-icon v-if="msg.role=='assistant'" icon="fa-solid fa-microchip-ai" color="green"/>
+                    <font-awesome-icon v-if="msg.role=='assistant'" icon="fa-solid fa-hippo" color="white"/>
                 </div>
                 <div class="message__inner">
                     <div class="message__bubble">{{ msg.content }}</div>
@@ -69,7 +69,7 @@ let default_messages = [
         <div class="message">
             <div class="message__outer">
                 <div class="message__avatar">
-                    <font-awesome-icon icon="fa-solid fa-microchip-ai" beat />
+                    <font-awesome-icon icon="fa-solid fa-hippo" color="white" beat-fade/>
                 </div>
                 <div class="message__inner">
                     <div className="typing">
@@ -169,7 +169,10 @@ let default_messages = [
 }
 
 /* icon */
-/* TODO: change to white-ish */
+.fa-hippo {
+    scale: 2;
+    padding: 15px;
+}
 
 /* Typing animation */
 .typing {
