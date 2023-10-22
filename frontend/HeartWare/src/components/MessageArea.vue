@@ -5,7 +5,9 @@ import { ref } from 'vue'
 const props = defineProps({
     messages: [Object],
     input_msg: String,
-    is_typing: Boolean
+    is_typing: Boolean,
+    color: String,
+    button_color: String,
 })
 
 let default_messages = [
@@ -37,7 +39,7 @@ let default_messages = [
 </script>
 
 <template>
-<div class="wrapper">
+<div class="wrapper" :style="{backgroundColor: color}">
     <div :class="(msg.role == 'assistant') ? 'ai-msg' : ((msg.role == 'user') ? 'user-msg' : 'sys-msg')" v-for="msg in (messages || default_messages)" key:msg.id> 
         <div class="message">
             <div class="message__outer">
@@ -45,7 +47,7 @@ let default_messages = [
                     <font-awesome-icon v-if="msg.role=='assistant'" icon="fa-solid fa-hippo" color="white"/>
                 </div>
                 <div class="message__inner">
-                    <div class="message__bubble">{{ msg.content }}</div>
+                    <div class="message__bubble" :style="msg.role == 'user' ? {backgroundColor: button_color} : {}">{{ msg.content }}</div>
                     <div class="message__spacer"></div>
                 </div>
             </div>
@@ -58,7 +60,7 @@ let default_messages = [
                 <div class="message__avatar">
                 </div>
                 <div class="message__inner">
-                    <div class="message__bubble">{{ input_msg || "BUG: input msg hasn't arrived."}}</div>
+                    <div class="message__bubble" :style="{backgroundColor: button_color}">{{ input_msg || "BUG: input msg hasn't arrived."}}</div>
                     <div class="message__spacer"></div>
                 </div>
             </div>

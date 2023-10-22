@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import MessageArea from "./MessageArea.vue";
 import InputArea from "./InputArea.vue";
-import { ref, watch } from "vue";
+import Color from "./Color.vue";
+import { ref, watch, computed } from "vue";
 import { useStorage } from "@vueuse/core";
 
 interface Message {
@@ -15,8 +16,10 @@ interface Argument {
   content: string;
 }
 
-const rsp = ref('')
-const typing = ref(false)
+const props = defineProps({ color: String });
+
+const rsp = ref("");
+const typing = ref(false);
 
 localStorage.clear(); //TODO -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -56,7 +59,7 @@ socket.onmessage = (e: MessageEvent) => {
 };
 
 const send_to_llm = (text: string) => {
-  if (text !== '' || typing.value) {
+  if (text !== "" || typing.value) {
     socket.send(text);
     typing.value = true;
     rsp.value = text;
@@ -64,7 +67,7 @@ const send_to_llm = (text: string) => {
 };
 
 watch(conversation, (conv) => {
-  console.log(conv)
+  console.log(conv);
   indexed_conv.value = conv.map((item, index): Message => {
     return {
       id: index + 1,
@@ -74,12 +77,47 @@ watch(conversation, (conv) => {
   });
 });
 
-
+const button_color = computed(() => {
+  switch (props.color) {
+    case "#490009": // red
+      return "#b40000";
+      break;
+    case "#503c00": // orange
+      return "#c98300";
+      break;
+    case "#3b531f": // green
+      return "green";
+      break;
+    case "#183D3D": // teal
+      return "teal";
+      break;
+    case "#19376D": // blue
+      return "#2222da";
+      break;
+    case "#451952": // purple
+      return "purple";
+      break;
+    default:
+      console.log(`something wrong with color`);
+      return "teal";
+  }
+});
 </script>
 
 <template>
-  <MessageArea :messages="indexed_conv" :input_msg="rsp" :is_typing="typing"/>
-  <InputArea v-on:response="send_to_llm" :is_typing="typing"/>
+  <MessageArea
+    :messages="indexed_conv"
+    :input_msg="rsp"
+    :is_typing="typing"
+    :color="color"
+    :button_color="button_color"
+  />
+  <InputArea
+    v-on:response="send_to_llm"
+    :is_typing="typing"
+    :color="color"
+    :button_color="button_color"
+  />
 </template>
 
 <style></style>
