@@ -16,6 +16,7 @@ import {
   faGear,
   faTrash,
   faMusic,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
@@ -23,6 +24,7 @@ library.add(faHippo);
 library.add(faGear);
 library.add(faTrash);
 library.add(faMusic);
+library.add(faPaperPlane);
 
 const app = createApp(App).component("font-awesome-icon", FontAwesomeIcon);
 
