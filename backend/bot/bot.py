@@ -1,3 +1,4 @@
+import time
 from typing import List, Dict
 from gpt4all import GPT4All
 
@@ -20,6 +21,7 @@ class Bot:
         scanned_res = prompt_scan(usr_input)
         prompts = usr_input.split()
         if scanned_res is not None:
+            time.sleep(5)
             self.model.current_chat_session.append({'role': 'user', 'content': usr_input})
             self.model.current_chat_session.append({'role': 'assistant', 'content': scanned_res})
             return

@@ -6,9 +6,7 @@ REVIEW_PATH = '../course_reviews.json'
 ABBREV = {
     ("failed", "messed up"): "consolation",
     ("learning phase", "exam phase", "studying phase"): "lernphase",
-    (
-    "student life", "vis", "CAB", "polyball", "Bjorn", "Hackathon", "Ueli", "Maurer", "Ueli Maurer",
-    "Katzensee", "diversity", "housing"): "student life",
+    ("vis", "CAB", "polyball", "Bjorn", "Hackathon", "Katzensee", "diversity", "housing"): "student life",
 
     ("diskmat", "diskrete mathematik", "diskmathe", "diskmath",
      "diskrete mathe"): "Discrete Mathematics",

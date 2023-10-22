@@ -147,6 +147,9 @@ def prompt_scan(prompt: str) -> str | None:
     bot generate a proper, unscripted response"""
 
     words = prompt.split()
+    if len(words) != 0:
+        words[-1] = words[-1].strip('?')
+
     print(words)
     for word in words:
         abbrev = map_course(word)
