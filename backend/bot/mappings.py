@@ -1,34 +1,42 @@
 import json
 import random
-REVIEW_PATH = 'backend/scrape/courses.json'
+
+REVIEW_PATH = '../course_reviews.json'
 
 ABBREV = {
     ("failed", "messed up"): "consolation",
     ("learning phase", "exam phase", "studying phase"): "lernphase",
-    ("student life", "vis", "CAB", "polyball", "Bjorn", "Hackathon", "Ueli", "Maurer", "Ueli Maurer", "Katzensee", "diversity", "housing"): "student life",
+    (
+    "student life", "vis", "CAB", "polyball", "Bjorn", "Hackathon", "Ueli", "Maurer", "Ueli Maurer",
+    "Katzensee", "diversity", "housing"): "student life",
 
-    ("diskmat", "diskrete mathematik", "diskmathe", "diskmath", "diskrete mathe"): "Discrete Mathematics",
+    ("diskmat", "diskrete mathematik", "diskmathe", "diskmath",
+     "diskrete mathe"): "Discrete Mathematics",
     ("linalg", "lineare algebra"): "Linear Algebra",
     ("eprog", "intro to programming", "prog", "programming class"): "Introduction to Programming",
-    ("AnD", "AuD", "Algorithms", "Algorithms and Datastructures", "Algorithmen und Datenstrukturen"): "Algorithms and Data Structures",
-
+    ("AuD", "Algorithms", "Algorithms and Datastructures",
+     "Algorithmen und Datenstrukturen"): "Algorithms and Data Structures",
 
     ("AnW", "Algowahr", "Algorithmen und Wahrscheinlichkeit"): "Algorithms and Probability",
-    ("pprog", "Parallele Programmierung", "Parallele Programmieren", "Paralleles Programmieren", "Paralleles Programmierung"): "Parallel Programming",
+    ("pprog", "Parallele Programmierung", "Parallele Programmieren", "Paralleles Programmieren",
+     "Paralleles Programmierung"): "Parallel Programming",
     ("ana", "ana1", "analysis", "analysis I"): "Analysis 1",
-    ("DDCA", "digital design", "computer architecture", "labs", "FPGAs", "FPGA"): "Digital Design and Computer Architecture",
+    ("DDCA", "digital design", "computer architecture", "labs", "FPGAs",
+     "FPGA"): "Digital Design and Computer Architecture",
 
-
-    ("numcs", "NumCS", "numerics", "numerical methods", "NumCSE"): "Numerical Methods for Computer Science",
+    ("numcs", "NumCS", "numerics", "numerical methods",
+     "NumCSE"): "Numerical Methods for Computer Science",
     ("ana", "ana2", "analysis", "analysis II"): "Analysis 2",
     ("SPCA", "systems programming"): "Systems Programming and Computer Architecture",
-    ("TI", "Theoretische Informatik", "TheoInf", "Theoretische Inf"): "Theoretical Computer Science",
+    (
+    "TI", "Theoretische Informatik", "TheoInf", "Theoretische Inf"): "Theoretical Computer Science",
 
-    ("FMFP", "functional programming", "haskell", "monads", "formal methods", "functional programming and formal methods"): "Formal Methods and Functional Programming",
-    ("DMDB", "databases", "database programming", "SQL", "data modeling", "data modelling", "data modelling and databases"): "Data Modeling and Databases",
+    ("FMFP", "functional programming", "haskell", "monads", "formal methods",
+     "functional programming and formal methods"): "Formal Methods and Functional Programming",
+    ("DMDB", "databases", "database programming", "SQL", "data modeling", "data modelling",
+     "data modelling and databases"): "Data Modeling and Databases",
     ("WuS", "Wahrscheinlichkeit und Statistik"): "Probability and Statistics",
     ("CN", "networks", "compnet"): "Computer Networks",
-
 
     ("APC", "Algorithms Probability and Computing"): "Algorithms, Probability and Computing",
     ("systems", ""): "Computer Systems",
@@ -38,7 +46,6 @@ ABBREV = {
     ("VisComp", "VisCom"): "Visual Computing",
     ("InfSec", ""): "Information Security",
     ("RSE", ""): "Rigorous Software Engineering",
-
 
     ("algolab", ""): "Algorithms Lab",
     ("ASL", "systems lab"): "Advanced Systems Lab",
@@ -58,7 +65,7 @@ def map_course(abbreviation: str) -> str | None:
 
     for value in ABBREV.values():
         if value.lower() == abbreviation:
-            return value        # perfect match
+            return value  # perfect match
 
     for key in ABBREV.keys():
         for keyword in key:
@@ -77,6 +84,8 @@ def return_review(full_name: str) -> str | None:
     with open(REVIEW_PATH, 'r') as json_file:
         data = json.load(json_file)
         if full_name in data.keys():
-            return random.choice(data[full_name])
-        else:
-            return f'I dont have too much information on {full_name}'
+            full_rev = ''
+            for rev in data[full_name]:
+                full_rev = full_rev + '; ' + rev
+            # return random.choice(data[full_name])
+            return full_rev

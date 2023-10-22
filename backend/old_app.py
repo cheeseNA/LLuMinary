@@ -1,3 +1,7 @@
+"""
+FOR TESTING
+"""
+
 import os
 import json
 
@@ -5,6 +9,7 @@ from bot.bot import Bot
 from fastapi import FastAPI, Request, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
+import logging
 import ast
 
 templates = Jinja2Templates(directory="templates")
@@ -26,6 +31,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 def read_root(request: Request):
     return templates.TemplateResponse("chat.html", {"request": request})
@@ -41,12 +47,13 @@ async def websocket_endpoint(websocket: WebSocket):
     #     {'role': 'assistant', 'content': 'Hello, my name is AI. How can I assist you today?'}]
 
     while True:
+        logging.basicConfig(level=logging.INFO)
         bot = Bot(200)
         chat = True
         # prev_convo = await websocket.receive_text()
         # print(prev_convo)
 
-        with bot.model.chat_session(system_prompt='answer in 4 sentences max'):
+        with bot.model.chat_session('Answer in 6 sentences max'):
             # check for previous chat history
             # if prev_convo == "":
             #     pass
@@ -68,6 +75,8 @@ async def websocket_endpoint(websocket: WebSocket):
                     print(bot.get_chat_session())
                     await websocket.send_text(json.dumps(bot.get_chat_session()))
 
+
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=9000)

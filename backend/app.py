@@ -59,14 +59,9 @@ async def websocket_endpoint(websocket: WebSocket):
                 user_message = await websocket.receive_text()
                 print(user_message)
                 user_messages.append(user_message)
-
-                if user_message == 'END':
-                    chat = False
-                    print(bot.get_chat_session())  # TODO store chat session
-                else:
-                    bot.respond(user_message)
-                    print(bot.get_chat_session())
-                    await websocket.send_text(json.dumps(bot.get_chat_session()))
+                bot.respond(user_message)
+                print(bot.get_chat_session())
+                await websocket.send_text(json.dumps(bot.get_chat_session()))
 
 if __name__ == "__main__":
     import uvicorn
