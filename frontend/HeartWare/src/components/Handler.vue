@@ -113,6 +113,7 @@ const button_color = computed(() => {
     :button_color="button_color"
   />
   <InputArea
+    id = "floor"
     v-on:response="send_to_llm"
     :is_typing="typing"
     :color="color"
@@ -120,4 +121,8 @@ const button_color = computed(() => {
   />
 </template>
 
-<style></style>
+<style>
+  #floor {
+    float: bottom;
+  }
+</style>

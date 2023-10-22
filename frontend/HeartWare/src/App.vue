@@ -30,6 +30,8 @@ const color = ref("#222222");
     grid-template-areas:
       "div div div";
     grid-template-columns: 1fr 8fr 1fr;
+    /* grid-template-rows: repeat(3, minmax(auto, 1fr)); */
+    grid-template-rows: auto;
   }
 
   .settings_cell {
