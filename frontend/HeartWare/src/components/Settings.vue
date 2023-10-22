@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import Color from "./Color.vue";
+import Audio from "./Audio.vue";
 
 const emit = defineEmits({ color: String, backgroundColor: String });
 const extended = ref(false);
@@ -34,6 +35,7 @@ const deleteConversation = () => {
       :icon="['fas', 'trash']"
       :class="{ settings: true }"
     />
+    <Audio/>
   </div>
 </template>
 
