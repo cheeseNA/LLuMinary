@@ -15,6 +15,7 @@ const color = ref("blue");
       "
     />
     <Handler :color="color" />
+    <template #fallback>Awaiting Websocket...</template>
   </Suspense>
 </template>
 
