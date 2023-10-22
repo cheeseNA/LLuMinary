@@ -1,4 +1,3 @@
-import os
 import json
 
 from bot.bot import Bot
@@ -12,11 +11,11 @@ templates = Jinja2Templates(directory="templates")
 app = FastAPI()
 user_messages = []
 
-
 origins = [
     "*",
     "http://localhost:3000",
     "https://lluminaries.serveo.net",
+    "https://team-1.viscon-hackathon.ch/"
 ]
 
 app.add_middleware(
@@ -59,6 +58,7 @@ async def websocket_endpoint(websocket: WebSocket):
                 bot.respond(user_message)
                 print(bot.get_chat_session())
                 await websocket.send_text(json.dumps(bot.get_chat_session()))
+
 
 if __name__ == "__main__":
     import uvicorn

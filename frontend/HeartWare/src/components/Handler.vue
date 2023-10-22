@@ -21,7 +21,7 @@ const props = defineProps({ color: String });
 const rsp = ref("");
 const typing = ref(false);
 
-localStorage.clear(); //TODO -------------------------------------------------------------------------------------------------------------------------------------------------
+// localStorage.clear(); //TODO -------------------------------------------------------------------------------------------------------------------------------------------------
 
 const socket = new WebSocket("wss://lluminaries.serveo.net/chat");
 const awaitConnection = (s: WebSocket) => {

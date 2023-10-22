@@ -30,9 +30,9 @@ class Bot:
                 resp_front = return_review(full_name)
 
                 # a dirty way
-                self.model.generate(f'summarize this: {resp_front} ',
+                self.model.generate(f'how is {full_name}? these are what the other students say: {resp_front} ',
                                     max_tokens=self.max_tokens, modify=True,
-                                    original=usr_input, temp=1.0)
+                                    original=usr_input, temp=2.0)
 
                 if depression_check(usr_input):
                     redirect(self)
