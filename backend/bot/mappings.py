@@ -4,9 +4,9 @@ import random
 REVIEW_PATH = '../course_reviews.json'
 
 ABBREV = {
-    ("failed", "messed up"): "consolation",
-    ("learning phase", "exam phase", "studying phase"): "lernphase",
-    ("vis", "CAB", "polyball", "Bjorn", "Hackathon", "Katzensee", "diversity", "housing"): "student life",
+    ("failed", "messed"): "consolation",
+    ("phase", ""): "lernphase",
+    ("life", "vis", "CAB", "polyball", "Bjorn", "Hackathon", "Katzensee", "diversity", "housing"): "student life",
 
     ("diskmat", "diskrete mathematik", "diskmathe", "diskmath",
      "diskrete mathe"): "Discrete Mathematics",
