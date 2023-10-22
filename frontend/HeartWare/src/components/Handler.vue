@@ -23,7 +23,7 @@ const typing = ref(false);
 
 // localStorage.clear(); //TODO -------------------------------------------------------------------------------------------------------------------------------------------------
 
-const socket = new WebSocket("wss://lluminaries.serveo.net/chat");
+const socket = new WebSocket("ws://localhost:8000/chat");
 const awaitConnection = (s: WebSocket) => {
   return new Promise((resolve): void => {
     if (s.readyState !== s.OPEN) {
