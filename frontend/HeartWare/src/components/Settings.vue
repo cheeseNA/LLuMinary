@@ -29,7 +29,11 @@ const deleteConversation = () => {
   />
   <div :class="{ sidebar: extended, minimized: !extended }">
     <Color @color="(c) => (color = c)" />
-    <font-awesome-icon @click="deleteConversation" :icon="['fas', 'trash']" />
+    <font-awesome-icon
+      @click="deleteConversation"
+      :icon="['fas', 'trash']"
+      :class="{ settings: true }"
+    />
   </div>
 </template>
 
