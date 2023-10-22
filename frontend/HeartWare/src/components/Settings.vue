@@ -9,6 +9,10 @@ const color = ref("blue");
 watch(color, (c) => {
   emit("color", c);
 });
+
+const deleteConversation = () => {
+  localStorage.clear();
+};
 </script>
 
 <template>
@@ -25,6 +29,7 @@ watch(color, (c) => {
   />
   <div :class="{ sidebar: extended, minimized: !extended }">
     <Color @color="(c) => (color = c)" />
+    <font-awesome-icon @click="deleteConversation" :icon="['fas', 'trash']" />
   </div>
 </template>
 
@@ -33,6 +38,7 @@ watch(color, (c) => {
   /* width: 0px; */
   opacity: 0%;
   transition-duration: 0.6s;
+  display: none;
 }
 .sidebar {
   display: flex;
