@@ -12,6 +12,7 @@ templates = Jinja2Templates(directory="templates")
 app = FastAPI()
 user_messages = []
 
+
 origins = [
     "*",
     "http://localhost:3000",
@@ -25,10 +26,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# @app.get("/")
-# def read_root(request: Request):
-#     return templates.TemplateResponse("chat.html", {"request": request})
 
 
 @app.websocket("/chat")

@@ -142,10 +142,11 @@ class WebScrapper:
 
 if __name__ == "__main__":
     webscraper = WebScrapper(URL)
-    courses = webscraper.get_course_dict()
-    json.dump(courses, open("courses.json", "w"))
-    # pprint.pprint(webscraper.get_course_reviews('https://n.ethz.ch/~lteufelbe/coursereview/?course=252-3005-00L'))
-    course_reviews = {}
-    for course, url in tqdm.tqdm(courses.items()):
-        course_reviews[course] = webscraper.get_course_reviews(url)
-    json.dump(course_reviews, open("course_reviews.json", "w"))
+    # courses = webscraper.get_course_dict()
+    # json.dump(courses, open("courses.json", "w"))
+    # # pprint.pprint(webscraper.get_course_reviews('https://n.ethz.ch/~lteufelbe/coursereview/?course=252-3005-00L'))
+    # course_reviews = {}
+    # for course, url in tqdm.tqdm(courses.items()):
+    #     course_reviews[course] = webscraper.get_course_reviews(url)
+    # json.dump(course_reviews, open("course_reviews.json", "w"))
+    # reddit SQnoC3ObvgnGjWt90zD9Z _2INHSNB8V5eaWp4P0rY_mE
