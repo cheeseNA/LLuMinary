@@ -78,10 +78,11 @@ watch(color, (c: string) => {
 <style>
 .color-picker {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 input[type="radio"] {
@@ -93,18 +94,18 @@ input[type="radio"] {
   position: relative;
   width: 50px;
   height: 50px;
-  margin: 10px;
+  margin: 0px;
   cursor: pointer;
 }
 
 .button span {
   display: block;
-  position: absolute;
+  position: relative;
   width: 30px;
   height: 30px;
   padding: 0;
   top: 50%;
-  left: 50%;
+  left: 16.5px;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
@@ -141,7 +142,7 @@ input[type="radio"] {
 
 .layer {
   display: block;
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   top: 0;

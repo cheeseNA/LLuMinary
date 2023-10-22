@@ -97,12 +97,13 @@ function mmTrack() {
 
 
 .but {
+  font-size: 25px;
   color: white;
   opacity: 60%;
   transition-duration: 0.9s;
+  padding: 5px;
 }
 .but:hover {
-  color: white;
   opacity: 100%;
   transition-duration: 0.6s;
 }

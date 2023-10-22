@@ -29,13 +29,15 @@ const deleteConversation = () => {
     color="color"
   />
   <div :class="{ sidebar: extended, minimized: !extended }">
+    <Audio/>
     <Color @color="(c) => (color = c)" />
-    <font-awesome-icon
+    <div>
+      <font-awesome-icon
       @click="deleteConversation"
       :icon="['fas', 'trash']"
       :class="{ settings: true }"
     />
-    <Audio/>
+    </div>
   </div>
 </template>
 
@@ -48,7 +50,8 @@ const deleteConversation = () => {
 }
 .sidebar {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: left;
   opacity: 100%;
   transition-duration: 0.6s;
 }
@@ -57,8 +60,11 @@ const deleteConversation = () => {
   transform: rotate(180deg);
 }
 .settings {
+  color: white;
+  font-size: 25px;
   opacity: 60%;
   transition-duration: 0.9s;
+  padding: 5px;
 }
 .settings:hover {
   opacity: 100%;
