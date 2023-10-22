@@ -33,6 +33,7 @@ watch(color, (c) => {
   /* width: 0px; */
   opacity: 0%;
   transition-duration: 0.6s;
+  display: none;
 }
 .sidebar {
   display: flex;
