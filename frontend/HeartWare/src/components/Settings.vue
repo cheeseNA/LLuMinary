@@ -11,7 +11,7 @@ watch(color, (c) => {
 });
 
 const deleteConversation = () => {
-  localStorage.clear();
+  localStorage.setItem("conversation", "[]");
 };
 </script>
 
